@@ -9,14 +9,14 @@
   <title>Python 第三方包 pandas 使用 | 日盈则仄 月盈则食</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="pandas 包的使用">
-<meta name="keywords" content="python,pandas">
+<meta name="keywords" content="PYTHON,pandas">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 第三方包 pandas 使用">
 <meta property="og:url" content="http://bitcit.cn/2018/03/24/pandas_tutorial/index.html">
 <meta property="og:site_name" content="日盈则仄 月盈则食">
 <meta property="og:description" content="pandas 包的使用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-23T11:13:42.000Z">
+<meta property="og:updated_time" content="2018-04-23T11:52:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 第三方包 pandas 使用">
 <meta name="twitter:description" content="pandas 包的使用">
@@ -179,7 +179,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Python-第三方包-pandas-使用"><a href="#Python-第三方包-pandas-使用" class="headerlink" title="Python 第三方包 pandas 使用"></a>Python 第三方包 pandas 使用</h1><p><code>import pandas as pd</code> <br><br><code>import numpy as np</code><br></p>
+        <p><code>import pandas as pd</code> <br><br><code>import numpy as np</code><br></p>
 <h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><ul>
 <li>数据结构 Series</li>
 <li>数据结构 DateFrame</li>
@@ -188,6 +188,7 @@
 <li>Group By</li>
 <li>文件读取</li>
 </ul>
+<a id="more"></a>
 <h2 id="1-数据结构-Series"><a href="#1-数据结构-Series" class="headerlink" title="1. 数据结构 Series"></a>1. 数据结构 Series</h2><p>在 pandas 中，Series 是一个一维的数据结构<br></p>
 <ul>
 <li><code>s = pd.Series([3, 5, 3.1], index = [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;])</code> 可以通过 index 像数组一样对 s 中的元素进行访问和赋值操作，没有 index 参数时默认从 0 ~ n-1 作为索引。此时通过 <code>type(s)</code> 会得到 s 的类型为 pandas.core.series.Series。由于 Series 本来就是键-值对形式的数据，所以可以直接用 dict 来构造 Series，<code>pd.Series(a)</code>，其中 a 是一个字典。</li>
@@ -261,7 +262,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -367,6 +368,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Contents"><span class="toc-number">1.</span> <span class="toc-text">Contents</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据结构-Series"><span class="toc-number">2.</span> <span class="toc-text">1. 数据结构 Series</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-数据结构-DataFrame"><span class="toc-number">3.</span> <span class="toc-text">2. 数据结构 DataFrame</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-DataFrame-和-Series-中的-index"><span class="toc-number">4.</span> <span class="toc-text">3. DataFrame 和 Series 中的 index</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-常用的-Merge，-Join-和-Concatenate"><span class="toc-number">5.</span> <span class="toc-text">4.常用的 Merge， Join 和 Concatenate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Group-By"><span class="toc-number">6.</span> <span class="toc-text">5. Group By</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-文件读取"><span class="toc-number">7.</span> <span class="toc-text">6. 文件读取</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -487,7 +501,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
               <li class="article-tag-list-item">
