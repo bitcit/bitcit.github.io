@@ -156,6 +156,142 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-pandas_tutorial" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/24/pandas_tutorial/">Python 第三方包 pandas 使用</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/24/pandas_tutorial/" class="archive-article-date">
+  	<time datetime="2018-03-24T05:02:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Python-第三方包-pandas-使用"><a href="#Python-第三方包-pandas-使用" class="headerlink" title="Python 第三方包 pandas 使用"></a>Python 第三方包 pandas 使用</h1><p><code>import pandas as pd</code> <br><br><code>import numpy as np</code><br></p>
+<h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><ul>
+<li>数据结构 Series</li>
+<li>数据结构 DateFrame</li>
+<li>DataFrame 和 Series 中的 Index</li>
+<li>常用的 Merge，Join 和 Concatenate</li>
+<li>Group By</li>
+<li>文件读取</li>
+</ul>
+<h2 id="1-数据结构-Series"><a href="#1-数据结构-Series" class="headerlink" title="1. 数据结构 Series"></a>1. 数据结构 Series</h2><p>在 pandas 中，Series 是一个一维的数据结构<br></p>
+<ul>
+<li><code>s = pd.Series([3, 5, 3.1], index = [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;])</code> 可以通过 index 像数组一样对 s 中的元素进行访问和赋值操作，没有 index 参数时默认从 0 ~ n-1 作为索引。此时通过 <code>type(s)</code> 会得到 s 的类型为 pandas.core.series.Series。由于 Series 本来就是键-值对形式的数据，所以可以直接用 dict 来构造 Series，<code>pd.Series(a)</code>，其中 a 是一个字典。</li>
+<li><code>s[s &lt; 4]</code> 通过 boolean indexing 将 s 中小于 4 的数据筛选出来， <code>s &lt; 4</code> 会在 s 中满足条件的位置返回 True， 不满足条件的返回 False。<code>s[s &lt; 4] = 1</code> 会将 s 满足条件的部分数据值都更新为1。</li>
+<li>基本数学运算。<code>s / 2</code>， <code>s * 2</code> ，<code>np.square(s)</code>， <code>s ** 2</code> 都是合法的语法。如果要对两个 Series 进行加减乘除运算时，必需要求两个 Series 的 index 相同（运算作用在两个 Series 相同的 index 上）。</li>
+<li><code>a in s</code> 检索元素 a 是否在 s 中（如果 a 是浮点类型的则不能判断）。</li>
+<li><code>s.notnull()</code> 将 s 中元素非空的位置处返回 True，元素为空的位置处返回 False。<code>s.isnull()</code> 也是同样的道理，可以通过 <code>s[s.isnull() == False]</code> 来完成对空数据项的过滤。</li>
+<li><code>s.to_frame()</code>可以将 Series 转化成 Dataframe。</li>
+</ul>
+<h2 id="2-数据结构-DataFrame"><a href="#2-数据结构-DataFrame" class="headerlink" title="2. 数据结构 DataFrame"></a>2. 数据结构 DataFrame</h2><p>一个 DataFrame 就是一张表格， Series 表示的就是表格中某一列数据，DateFrame 可以看做是一组 Series 的集合。<br><br>先构造一个 DataFrame 格式的表格:<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = &#123;<span class="string">'city'</span>: [<span class="string">'Beijing'</span>, <span class="string">'Shanghai'</span>, <span class="string">'Guangzhou'</span>, <span class="string">'Shenzhen'</span>, <span class="string">'Hangzhou'</span>, <span class="string">'Chongqing'</span>],</span><br><span class="line">       <span class="string">'year'</span>: [<span class="number">2016</span>,<span class="number">2017</span>,<span class="number">2016</span>,<span class="number">2017</span>,<span class="number">2016</span>, <span class="number">2016</span>],</span><br><span class="line">       <span class="string">'population'</span>: [<span class="number">2100</span>, <span class="number">2300</span>, <span class="number">1000</span>, <span class="number">700</span>, <span class="number">500</span>, <span class="number">500</span>]&#125;</span><br><span class="line">       </span><br><span class="line">df = pd.DataFrame(data, columns = [<span class="string">'year'</span>, <span class="string">'city'</span>, <span class="string">'population'</span>, <span class="string">'debt'</span>],</span><br><span class="line">            index=[<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>, <span class="string">'four'</span>, <span class="string">'five'</span>, <span class="string">'six'</span>])</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line"> </span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">       year     city      population    debt</span></span><br><span class="line"><span class="string">---------------------------------------------</span></span><br><span class="line"><span class="string">one     2016    Beijing      2100        NaN</span></span><br><span class="line"><span class="string">two     2017    Shanghai     2300        NaN</span></span><br><span class="line"><span class="string">three   2017    Guangzhou    1000        NaN</span></span><br><span class="line"><span class="string">four    2017    Shenzhen      700        NaN</span></span><br><span class="line"><span class="string">five    2016    Hangzhou      500        NaN</span></span><br><span class="line"><span class="string">six     2016    Chongqing     500        NaN</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>df = pd.DataFrame(data, columns = list_1, index = list_2)</code> 构造一个 DataFrame 格式的数据表格，其中 data 可以是一个 dict， 通过list_1 中的元素顺序可以指定 DataFrame 表格中列属性名的先后顺序，通过 list_2 中的元素可以设定 DataFrame 中索引。</li>
+<li><code>df.columns</code> 和 <code>df.index</code> 分别获 DataFrame 的列名和索引，返回的数据格式为 pandas.core.indexes.base.Index，可以类似访问数组的方式访问 Index，但 Index 的值是不可被更改的。也可以通过 <code>df.columns = [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;]</code> 来更爱列名。</li>
+<li><code>df.T</code> 可以是 DataFrame 像矩阵一样进行转置，原来的列名变成索引，原来的索引变成列名。</li>
+<li>DataFrame 列的选择。<code>df[&#39;city&#39;]</code> 或 <code>df.city</code> 得到一个带 index 的 Series 格式的数据。</li>
+<li>DataFrame 行的选择。<code>df.loc[&#39;three&#39;]</code> 或 <code>df.iloc[2]</code> 得到一个 带index 的 Series 格式数据，index 为 DataFrame 列属性名。</li>
+<li>DataFrame 中元素赋值。<code>df[&#39;city&#39;][&#39;one&#39;] = &quot;China&quot;</code> 注意，此处先通过列名选出一个 Series，再通过该 Series 的 index 来访问元素。在这过程中因为是对切片进行赋值，所以程序会有 Warning，直接忽略即可。<code>df[&#39;city&#39;] = &quot;China&quot;</code> 则会将 DataFrame 中的整个 city 列都更新为 “China”。同理 <code>df.loc[&#39;two&#39;] = 0</code> 也会将 DateFrame 中 index 为 “two” 的整行元素都赋值为 0。当然可以通过将一个 list(或 Series) 赋值给整行或整列，但要求长度一致(用 Series 进行赋值时，会根据 index 进行匹配， 没有命中的项会被设置为 NaN)，否则会出错。</li>
+<li><code>df.index.name = &#39;index_name&#39;</code> 和 `df.columns.name = ‘columns_name’ 可以指定索引的名字和列名字。</li>
+<li><code>df.values</code> 返回的是 numpy 的 ndarray 格式的数据（二维）。</li>
+<li>DataFrame 也可以通过条件进行筛选。如 <code>df[df.population &gt; 1000]</code> 或 <code>df[df[&#39;population&#39;] &gt; 1000]</code>。</li>
+</ul>
+<h2 id="3-DataFrame-和-Series-中的-index"><a href="#3-DataFrame-和-Series-中的-index" class="headerlink" title="3. DataFrame 和 Series 中的 index"></a>3. DataFrame 和 Series 中的 index</h2><ul>
+<li>Index 中的值不可以被修改</li>
+<li>可以对 Index 进行索引和切片，例如 <code>s = pd.Series([3, 5, 3.1], index = [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;])</code> 可以通过 <code>s[[&#39;B&#39;,&#39;A&#39;]]</code> 或 <code>s[[1,0]]</code> 对 Series 中的值进行索引，可见 重命名 index 后的 Series，默认的数字 index 依旧可以使用。通过 <code>s[0:2]</code> 或 <code>s[&#39;A&#39;:&#39;C&#39;]</code> 对 Index 进行切片。对 DateFrame 格式数据进行切片可用 <code>df.loc[&#39;one&#39;:&#39;three&#39;]</code> 或 <code>df.iloc[0:2]</code>，也可以用 <code>df.[&#39;one&#39;:&#39;three&#39;]</code> 或 <code>df[0:2]</code>。注意：用 loc 索引是包含最后一个元素，用 iloc 索引时则不包含。</li>
+<li><code>df.reindex([&#39;A&#39;,&#39;B&#39;,&#39;C&#39;])</code> 重新给 DataFrame 或 Series格式数据的 Index 赋值。</li>
+<li><code>df.drop([&#39;year&#39;,&#39;city&#39;], axis=0)</code> ，`df.drop([‘one’,’two’]) 分别完成 DateFrame 中的 列属性和索引删除。</li>
+<li>多索引（MultiIndex）的 Series 可以通过 unstack() 和 stack() 函数与 DataFrame 格式之间相互转化。</li>
+</ul>
+<h2 id="4-常用的-Merge，-Join-和-Concatenate"><a href="#4-常用的-Merge，-Join-和-Concatenate" class="headerlink" title="4.常用的 Merge， Join 和 Concatenate"></a>4.常用的 Merge， Join 和 Concatenate</h2><p><a href="http://pandas.pydata.org/pandas-docs/stable/merging.html" target="_blank" rel="noopener">各方法的比价请点击这里</a></p>
+<h2 id="5-Group-By"><a href="#5-Group-By" class="headerlink" title="5. Group By"></a>5. Group By</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">salaries = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">'Name'</span>: [<span class="string">'July'</span>, <span class="string">'Chu'</span>, <span class="string">'Chu'</span>, <span class="string">'Lin'</span>, <span class="string">'July'</span>, <span class="string">'July'</span>, <span class="string">'Chu'</span>, <span class="string">'July'</span>],</span><br><span class="line">    <span class="string">'Year'</span>: [<span class="number">2016</span>,<span class="number">2016</span>,<span class="number">2016</span>,<span class="number">2016</span>,<span class="number">2017</span>,<span class="number">2017</span>,<span class="number">2017</span>,<span class="number">2017</span>],</span><br><span class="line">    <span class="string">'Salary'</span>: [<span class="number">10000</span>,<span class="number">2000</span>,<span class="number">4000</span>,<span class="number">5000</span>,<span class="number">18000</span>,<span class="number">25000</span>,<span class="number">3000</span>,<span class="number">4000</span>],</span><br><span class="line">    <span class="string">'Bonus'</span>: [<span class="number">3000</span>,<span class="number">1000</span>,<span class="number">1000</span>,<span class="number">1200</span>,<span class="number">4000</span>,<span class="number">2300</span>,<span class="number">500</span>,<span class="number">1000</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">   Bonus  Name  Salary  Year</span></span><br><span class="line"><span class="string">-----------------------------</span></span><br><span class="line"><span class="string">0   3000  July   10000  2016</span></span><br><span class="line"><span class="string">1   1000   Chu    2000  2016</span></span><br><span class="line"><span class="string">2   1000   Chu    4000  2016</span></span><br><span class="line"><span class="string">3   1200   Lin    5000  2016</span></span><br><span class="line"><span class="string">4   4000  July   18000  2017</span></span><br><span class="line"><span class="string">5   2300  July   25000  2017</span></span><br><span class="line"><span class="string">6    500   Chu    3000  2017</span></span><br><span class="line"><span class="string">7   1000  July    4000  2017</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>g = salaries.groupby(&#39;Name&#39;)</code> 会得到一个pandas.core.groupby.DataFrameGroupBy 类型的数据，常常与 aggregate 一起使用。<code>g.aggregate(sum)</code> 也可写作 <code>g.sum()</code>，除了 sum 还有 max,min,size。<code>g.describe()</code> 能够获得分组的统计信息。同样也可以根据多个列属性进行分组。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">g = salaries.groupby(<span class="string">'Name'</span>)</span><br><span class="line">g.sum()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">       Bonus 	Salary 	Year</span></span><br><span class="line"><span class="string">Name </span></span><br><span class="line"><span class="string">-----------------------------			</span></span><br><span class="line"><span class="string">Chu 	2500 	9000 	6049</span></span><br><span class="line"><span class="string">July 	10300 	57000 	8067</span></span><br><span class="line"><span class="string">Lin 	1200 	5000 	2016</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<h2 id="6-文件读取"><a href="#6-文件读取" class="headerlink" title="6. 文件读取"></a>6. 文件读取</h2><ul>
+<li><code>data = pd.read_csv(&quot;data.csv&quot;, encoding = &#39;latin1&#39;, sep=&#39;;&#39;, parse_dates=[&#39;Date&#39;], index_col=&#39;Date&#39;)</code> 中列举了几个常用的参数。</li>
+<li><code>data.dropna()</code> 会删除 data 中所有带 NA 的行。当然 dropna() 函数中还有 how，axis等参数可供设置。</li>
+<li>datetime 格式的时间数据中有 weekday,year,date,day等属性,详细点击<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DatetimeIndex.html" target="_blank" rel="noopener">这里</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">pandas</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Python-相关包//" class="article-tag-list-link color1">Python 相关包</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/24/pandas_tutorial/">Show All >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-numpy_tutorial" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -163,7 +299,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/22/numpy_tutorial/">python 中 numpy 的使用</a>
+      <a class="article-title" href="/2018/03/22/numpy_tutorial/">Python 第三方包 numpy 使用</a>
     </h1>
   
 
@@ -176,16 +312,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="python-中-numpy-的使用"><a href="#python-中-numpy-的使用" class="headerlink" title="python 中 numpy 的使用"></a>python 中 numpy 的使用</h1><p><code>import numpy as np</code> <br></p>
-<h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><ul>
-<li>初始化数组</li>
-<li>数组的取值与赋值</li>
-<li>数组的数值运算</li>
-<li>广播机制</li>
-<li>逻辑运算</li>
-<li>其他高级的 ndarray 处理</li>
-<li>文件的输入输出</li>
-</ul>
+        <h1 id="Python-第三方包-numpy-使用"><a href="#Python-第三方包-numpy-使用" class="headerlink" title="Python 第三方包 numpy 使用"></a>Python 第三方包 numpy 使用</h1><p><code>import numpy as np</code></p>
 <h2 id="1-初始化数组"><a href="#1-初始化数组" class="headerlink" title="1. 初始化数组"></a>1. 初始化数组</h2><blockquote>
 <p>a = np.array([1,2,3]) # 将 list 类型数组转换为ndarray数组， 也可以通过 dtype 参数确定数组中元素的数据类型</p>
 </blockquote>
@@ -375,8 +502,8 @@
 </thead>
 <tbody>
 <tr>
-<td>revel()</td>
-<td style="text-align:center">a.revel(), np.revel(a)</td>
+<td>ravel()</td>
+<td style="text-align:center">a.ravel(), np.ravel(a)</td>
 <td>将多维的数组转换为一维的数组</td>
 </tr>
 <tr>
@@ -625,6 +752,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">numpy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pandas</a>
               </li>
             
             <div class="clearfix"></div>

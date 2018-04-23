@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://bitcit.cn">
-  <title>Python 第三方包 numpy 使用 | 日盈则仄 月盈则食</title>
+  <title>Tag: pandas | 日盈则仄 月盈则食</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="numpy 包的使用">
-<meta name="keywords" content="python,numpy">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Python 第三方包 numpy 使用">
-<meta property="og:url" content="http://bitcit.cn/2018/03/22/numpy_tutorial/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="日盈则仄 月盈则食">
+<meta property="og:url" content="http://bitcit.cn/tags/pandas/index.html">
 <meta property="og:site_name" content="日盈则仄 月盈则食">
-<meta property="og:description" content="numpy 包的使用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-23T11:13:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python 第三方包 numpy 使用">
-<meta name="twitter:description" content="numpy 包的使用">
+<meta name="twitter:title" content="日盈则仄 月盈则食">
   
     <link rel="alternative" href="/atom.xml" title="日盈则仄 月盈则食" type="application/atom+xml">
   
@@ -159,316 +154,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-numpy_tutorial" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Python 第三方包 numpy 使用
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/03/24/pandas_tutorial/" class="archive-article-date">
+  	<time datetime="2018-03-24T05:02:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-24</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/03/24/pandas_tutorial/">Python 第三方包 pandas 使用</a>
     </h1>
   
 
-        
-        <a href="/2018/03/22/numpy_tutorial/" class="archive-article-date">
-  	<time datetime="2018-03-22T15:47:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Python-第三方包-numpy-使用"><a href="#Python-第三方包-numpy-使用" class="headerlink" title="Python 第三方包 numpy 使用"></a>Python 第三方包 numpy 使用</h1><p><code>import numpy as np</code></p>
-<h2 id="1-初始化数组"><a href="#1-初始化数组" class="headerlink" title="1. 初始化数组"></a>1. 初始化数组</h2><blockquote>
-<p>a = np.array([1,2,3]) # 将 list 类型数组转换为ndarray数组， 也可以通过 dtype 参数确定数组中元素的数据类型</p>
-</blockquote>
-<blockquote>
-<p>type(a) # 查看 a 的类型，此处为 numpy.ndarray, a.dtype 返回 a 中元素的类型，有 int32， float64, int64， np.string_等</p>
-</blockquote>
-<blockquote>
-<p>a[0] # 可以通过下标的 index 来访问 ndarray 中的元素, 如二维数组可以通过 a[i][j] 或者 a[i,j] 的形式进行访问</p>
-</blockquote>
-<blockquote>
-<p>a.shape # 查看 a 的形状，以 tuple 的形式返回，此处返回 (3，)</p>
-</blockquote>
-<blockquote>
-<p>a.astype(np.float64) # 复制数组并转换数据类型，将 float 转换为 int 时小数部分被舍弃，当 dtype = np.string_ 时，可以转换为相应的数值</p>
-</blockquote>
-<p>其他内置创建数组的函数：</p>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>zeros((2,3))</td>
-<td>生成 2*3 的 array</td>
-</tr>
-<tr>
-<td>ones((1,2))</td>
-<td>生成 1*2 的 array</td>
-</tr>
-<tr>
-<td>full((2,3), 8)</td>
-<td>生成 2*3 的 array, 并把元素都填充成8</td>
-</tr>
-<tr>
-<td>eye(3)</td>
-<td>生成 3*3 的单位阵</td>
-</tr>
-<tr>
-<td>random.random((2,3))</td>
-<td>生成 2*3 的随机 array， 随机值在[0,1)之间</td>
-</tr>
-<tr>
-<td>random.randn((2,3))</td>
-<td>生成 2*3 的随机 array， 随机值符合正态分布</td>
-</tr>
-<tr>
-<td>empty((2,3))</td>
-<td>生成 2*3 的空 array, 其中元素是没有经过初始化的随机值</td>
-</tr>
-<tr>
-<td>empty_like(a)</td>
-<td>生成与 a 形状相同的未经过初始化的空array</td>
-</tr>
-<tr>
-<td>arange(5)</td>
-<td>生成 array： [0,1,2,3,4]</td>
-</tr>
-</tbody>
-</table>
-<h2 id="2-数组的取值与赋值"><a href="#2-数组的取值与赋值" class="headerlink" title="2.数组的取值与赋值"></a>2.数组的取值与赋值</h2><blockquote>
-<p>a = np.array([[1,2,3,4],[5,6,7,8],[9,10,11,12]])</p>
-</blockquote>
-<blockquote>
-<p>a[0:2,2:4] # 对 a 进行切片得到的是一个 2*2 的数组</p>
-</blockquote>
-<blockquote>
-<p>a[1,:] # 切片得到 [5,6,7,8]</p>
-</blockquote>
-<blockquote>
-<p>a[[1], :] # 切片得到 [[5,6,7,8]]</p>
-</blockquote>
-<blockquote>
-<p>a[[0,1,2],[0,1,0]] # 取出 a[0][0], a[1][1], a[2][0]中的元素，构成一个一维数组，结果为 [1, 6, 9]</p>
-</blockquote>
-<blockquote>
-<p>bool_index = (a &gt; 3) # 此时 bool_index 为与 a 形状相同的数组，a 中对应元素满足右侧条件的地方在 bool_index 中为 True， 否则为 False</p>
-</blockquote>
-<blockquote>
-<p>a[a&gt;2] # 将 a 中大于2的元素筛选出来组成以为数组返回。</p>
-</blockquote>
-<h2 id="3-数组的数值运算"><a href="#3-数组的数值运算" class="headerlink" title="3. 数组的数值运算"></a>3. 数组的数值运算</h2><blockquote>
-<p>a = np.array([[1,2,3],[4,5,6]], dtype=np.float64)</p>
-</blockquote>
-<blockquote>
-<p>b = np.array([[7,8,9],[10,11,12]], dtype=np.float64)</p>
-</blockquote>
-<p>逐个元素做运算（elements wise)</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>np.add(a,b) 或 a+b</td>
-<td>a 与 b 中逐个元素做加法</td>
-</tr>
-<tr>
-<td>np.subtract(a,b) 或 a-b</td>
-<td>a 与 b 中逐个元素做减法</td>
-</tr>
-<tr>
-<td>np.multiply(a,b) 或 a*b</td>
-<td>a 与 b 中逐个元素做乘法</td>
-</tr>
-<tr>
-<td>np.divide(a,b) 或 a/b</td>
-<td>a 与 b 中逐个元素做除法</td>
-</tr>
-<tr>
-<td>np.sqrt(a)</td>
-<td>对 a 中逐个元素求平方根</td>
-</tr>
-</tbody>
-</table>
-<p>矩阵运算</p>
-<blockquote>
-<p>a.dot(b) 或 np.dot(a,b) # 当 a,b 为同等长度的一维数组时，求的是 a,b 两个的向量内积， 返回一个数值； 当 a,b 为多维数组且满足矩阵乘法的要求是，求的是矩阵乘法</p>
-</blockquote>
-<blockquote>
-<p>a.shape # 以 tuple 的形式返回 a 的形状</p>
-</blockquote>
-<blockquote>
-<p>a.T # 对 a 矩阵进行转置，1维的数组转置还是自己</p>
-</blockquote>
-<blockquote>
-<p>b.transpose((0,2,1)) # 加入此处 b 为3维数组，（0,2,1）表示将1,2两维进行装置</p>
-</blockquote>
-<blockquote>
-<p>b.swapaxes(1,2) # 也能达到将 b 数组的1,2两维进行转置的效果</p>
-</blockquote>
-<blockquote>
-<p>a.reshape(2,3,4) # 将 a 转换成 2<em>3</em>4 形状的数组,在某一维写 -1，numpy 会自动计算出正确的维度。</p>
-</blockquote>
-<blockquote>
-<p>np.sum(a) 或 a.sum() # 求 a 中所有元素的和，返回一个数值；<br>若在括号里加入 axis=0或1，为0时表示对 a 中元素每一列分别求和，并放回一个长度与a的列数相等的1维数组；axis为1时表示对 a 中元素每一行分别求和，并放回一个长度与a的行数相等的1维数组</p>
-</blockquote>
-<blockquote>
-<p>np.mean(a) 或 a.mean() #求平均值，与上一条 sum() 的用法类似</p>
-</blockquote>
-<blockquote>
-<p>np.cumsum(a) 或 a.cumsum() # 累计求和，例 a = np.array([[1,2,3],[4,5,6]]),结果为 [1,3,6,10,15,21]。当括号内有 axis 时， 为0时表示对每一个列分别累计求和， 结果为 [[1,2,3],[5,7,9]]; 为1时表示对每一行分别进行累计求和， 结果为 [[1,3,6],[4,9,15]]</p>
-</blockquote>
-<blockquote>
-<p>np.cumprod(a) 或 a.cumprod() # 累计求积， 与上一条 cumsum() 的用法一致</p>
-</blockquote>
-<blockquote>
-<p>a.sort() # 对 a 的最后一个维度上的数据进行排序， 在括号里加入数字 0 或 1 即可在指定的维度上进行排序</p>
-</blockquote>
-<h2 id="4-广播机制（Broadcasting）"><a href="#4-广播机制（Broadcasting）" class="headerlink" title="4. 广播机制（Broadcasting）"></a>4. 广播机制（Broadcasting）</h2><blockquote>
-<p>a = np.array([[1,2,3,4],[5,6,7,8]])</p>
-</blockquote>
-<blockquote>
-<p>b = np.array([2,4,6,8])</p>
-</blockquote>
-<blockquote>
-<p>a+b # 结果是[[3,6,9,12],[7,10,13,16]]</p>
-</blockquote>
-<p>比如要对 a,b 进行 逐个元素的求和操作，由于 a,b 的形状不相同，所以会启动广播机制。numpy 允许我们在不需要对 b 进行多次拷贝的情况下完成计算。 3<em>1 的array与 1</em>2 的array相加，得到的是 3*2 的array。broadcasting 会逐个比较两个array的形状，如果不相等时，将维数是1的array进行拷贝拓展至shape匹配。</p>
-<h2 id="5-逻辑运算"><a href="#5-逻辑运算" class="headerlink" title="5. 逻辑运算"></a>5. 逻辑运算</h2><blockquote>
-<p>a = np.array([1,3,5,7,9])</p>
-</blockquote>
-<blockquote>
-<p>b = np.array([2,4,6,8,10])</p>
-</blockquote>
-<blockquote>
-<p>c = np.array([True, False, True, True, Flase])</p>
-</blockquote>
-<blockquote>
-<p>np.where(c, a, b) # 对于c中为True的位置选择a中元素，False的位置选择b中元素。结果为 [1, 4, 5, 7, 10]</p>
-</blockquote>
-<blockquote>
-<p>np.where(a&gt;5, 1, -1) # 对于a中元素满足条件(大于5)的位置填1，不满足条件的填-1</p>
-</blockquote>
-<h2 id="6-其他高级的-ndarray-处理"><a href="#6-其他高级的-ndarray-处理" class="headerlink" title="6. 其他高级的 ndarray 处理"></a>6. 其他高级的 ndarray 处理</h2><table>
-<thead>
-<tr>
-<th>函数</th>
-<th style="text-align:center">使用示例</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ravel()</td>
-<td style="text-align:center">a.ravel(), np.ravel(a)</td>
-<td>将多维的数组转换为一维的数组</td>
-</tr>
-<tr>
-<td>concatenate()</td>
-<td style="text-align:center">np.concatenate([a,b], axis=0)</td>
-<td>把a,b连接起来，axis=0时，在行的维度上合并；axis=1时，在列的维度上合并</td>
-</tr>
-<tr>
-<td>vstack()</td>
-<td style="text-align:center">np.vstack((a,b))</td>
-<td>在垂直的方向堆叠 a,b 数组</td>
-</tr>
-<tr>
-<td>hstack()</td>
-<td style="text-align:center">np.hstack((a,b))</td>
-<td>在水平的方向堆叠 a,b 数组</td>
-</tr>
-<tr>
-<td>split(ary, indices_or_section, axis=0)</td>
-<td style="text-align:center">np.split(a,3), np.split(a, [3,5,6,10])</td>
-<td>把数组按第一维度上划分成几个部分，或按list中把第一维度上的索引进行切分</td>
-</tr>
-<tr>
-<td>c_</td>
-<td style="text-align:center">np.c_[a,b]</td>
-<td>将 a,b 按列进行堆叠</td>
-</tr>
-<tr>
-<td>c_</td>
-<td style="text-align:center">np.c_[1:3, -2:0]</td>
-<td>切片直接装换为数组，结果为 [[1,-2],[2,-1]]</td>
-</tr>
-<tr>
-<td>r_</td>
-<td style="text-align:center">np.r_[a,b]</td>
-<td>将 a,b 按行进行堆叠</td>
-</tr>
-<tr>
-<td>c_</td>
-<td style="text-align:center">np.r_[1:3, -2:0]</td>
-<td>切片直接装换为数组，结果为 [1,2,-2,-1]</td>
-</tr>
-<tr>
-<td>repeat(a, repeats, axis=None)</td>
-<td style="text-align:center">np.repeat(a,3),np.repeat(a,[2,3])</td>
-<td>将a中的<strong>元素</strong>（复制后的元素排列在原来元素的后面）按照axis重复若干遍，或a中<strong>对应的元素</strong>在axis维度上重复list中对应的遍数</td>
-</tr>
-<tr>
-<td>tile(a, repeats)</td>
-<td style="text-align:center">np.tile(a,3), np.tile(a,[4,2])</td>
-<td>将a最大维度上（或对应的维度上）整体元素堆叠相应的次数</td>
-</tr>
-</tbody>
-</table>
-<h2 id="7-文件的输入输出"><a href="#7-文件的输入输出" class="headerlink" title="7. 文件的输入输出"></a>7. 文件的输入输出</h2><blockquote>
-<p>data = np.loadtxt(“file.txt”, delimiter=’,’) # 读取txt文件作为数组</p>
-</blockquote>
-<blockquote>
-<p>np.save(“some_array”, a) # 保存文件，其中a是一个数组, 当文件名为字符串时，系统会自动附上 .npy 的文件拓展名</p>
-</blockquote>
-<blockquote>
-<p>np.load(“some_array.npy”) # 读取文件中的数组</p>
-</blockquote>
-<blockquote>
-<p>np.savez(“array_archive.npz”, a=array1, b=array2) #将多个数组一起压缩保存</p>
-</blockquote>
-<blockquote>
-<p>arch = np.load(“array_archive.npz”) # 得到的 arch 是一个字典，可以通过 arch[‘a’],arch[‘b’] 访问上一条所保存的数组</p>
-</blockquote>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -478,13 +193,13 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">numpy</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">pandas</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -497,108 +212,17 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://bitcit.cn/2018/03/22/numpy_tutorial/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/03/24/pandas_tutorial/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Python 第三方包 pandas 使用
-        
-      </div>
-    </a>
   
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -621,9 +245,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
