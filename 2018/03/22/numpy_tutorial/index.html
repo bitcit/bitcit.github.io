@@ -192,20 +192,13 @@
 <a id="more"></a>
 <h2 id="1-初始化数组"><a href="#1-初始化数组" class="headerlink" title="1. 初始化数组"></a>1. 初始化数组</h2><blockquote>
 <p>a = np.array([1,2,3]) # 将 list 类型数组转换为ndarray数组， 也可以通过 dtype 参数确定数组中元素的数据类型</p>
-</blockquote>
-<blockquote>
 <p>type(a) # 查看 a 的类型，此处为 numpy.ndarray, a.dtype 返回 a 中元素的类型，有 int32， float64, int64， np.string_等</p>
-</blockquote>
-<blockquote>
 <p>a[0] # 可以通过下标的 index 来访问 ndarray 中的元素, 如二维数组可以通过 a[i][j] 或者 a[i,j] 的形式进行访问</p>
-</blockquote>
-<blockquote>
 <p>a.shape # 查看 a 的形状，以 tuple 的形式返回，此处返回 (3，)</p>
-</blockquote>
-<blockquote>
 <p>a.astype(np.float64) # 复制数组并转换数据类型，将 float 转换为 int 时小数部分被舍弃，当 dtype = np.string_ 时，可以转换为相应的数值</p>
 </blockquote>
 <p>其他内置创建数组的函数：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -252,34 +245,22 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="2-数组的取值与赋值"><a href="#2-数组的取值与赋值" class="headerlink" title="2.数组的取值与赋值"></a>2.数组的取值与赋值</h2><blockquote>
 <p>a = np.array([[1,2,3,4],[5,6,7,8],[9,10,11,12]])</p>
-</blockquote>
-<blockquote>
 <p>a[0:2,2:4] # 对 a 进行切片得到的是一个 2*2 的数组</p>
-</blockquote>
-<blockquote>
 <p>a[1,:] # 切片得到 [5,6,7,8]</p>
-</blockquote>
-<blockquote>
 <p>a[[1], :] # 切片得到 [[5,6,7,8]]</p>
-</blockquote>
-<blockquote>
 <p>a[[0,1,2],[0,1,0]] # 取出 a[0][0], a[1][1], a[2][0]中的元素，构成一个一维数组，结果为 [1, 6, 9]</p>
-</blockquote>
-<blockquote>
 <p>bool_index = (a &gt; 3) # 此时 bool_index 为与 a 形状相同的数组，a 中对应元素满足右侧条件的地方在 bool_index 中为 True， 否则为 False</p>
-</blockquote>
-<blockquote>
 <p>a[a&gt;2] # 将 a 中大于2的元素筛选出来组成以为数组返回。</p>
 </blockquote>
 <h2 id="3-数组的数值运算"><a href="#3-数组的数值运算" class="headerlink" title="3. 数组的数值运算"></a>3. 数组的数值运算</h2><blockquote>
 <p>a = np.array([[1,2,3],[4,5,6]], dtype=np.float64)</p>
-</blockquote>
-<blockquote>
 <p>b = np.array([[7,8,9],[10,11,12]], dtype=np.float64)</p>
 </blockquote>
 <p>逐个元素做运算（elements wise)</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -310,66 +291,36 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>矩阵运算</p>
 <blockquote>
 <p>a.dot(b) 或 np.dot(a,b) # 当 a,b 为同等长度的一维数组时，求的是 a,b 两个的向量内积， 返回一个数值； 当 a,b 为多维数组且满足矩阵乘法的要求是，求的是矩阵乘法</p>
-</blockquote>
-<blockquote>
 <p>a.shape # 以 tuple 的形式返回 a 的形状</p>
-</blockquote>
-<blockquote>
 <p>a.T # 对 a 矩阵进行转置，1维的数组转置还是自己</p>
-</blockquote>
-<blockquote>
 <p>b.transpose((0,2,1)) # 加入此处 b 为3维数组，（0,2,1）表示将1,2两维进行装置</p>
-</blockquote>
-<blockquote>
 <p>b.swapaxes(1,2) # 也能达到将 b 数组的1,2两维进行转置的效果</p>
-</blockquote>
-<blockquote>
 <p>a.reshape(2,3,4) # 将 a 转换成 2<em>3</em>4 形状的数组,在某一维写 -1，numpy 会自动计算出正确的维度。</p>
-</blockquote>
-<blockquote>
 <p>np.sum(a) 或 a.sum() # 求 a 中所有元素的和，返回一个数值；<br>若在括号里加入 axis=0或1，为0时表示对 a 中元素每一列分别求和，并放回一个长度与a的列数相等的1维数组；axis为1时表示对 a 中元素每一行分别求和，并放回一个长度与a的行数相等的1维数组</p>
-</blockquote>
-<blockquote>
 <p>np.mean(a) 或 a.mean() #求平均值，与上一条 sum() 的用法类似</p>
-</blockquote>
-<blockquote>
 <p>np.cumsum(a) 或 a.cumsum() # 累计求和，例 a = np.array([[1,2,3],[4,5,6]]),结果为 [1,3,6,10,15,21]。当括号内有 axis 时， 为0时表示对每一个列分别累计求和， 结果为 [[1,2,3],[5,7,9]]; 为1时表示对每一行分别进行累计求和， 结果为 [[1,3,6],[4,9,15]]</p>
-</blockquote>
-<blockquote>
 <p>np.cumprod(a) 或 a.cumprod() # 累计求积， 与上一条 cumsum() 的用法一致</p>
-</blockquote>
-<blockquote>
 <p>a.sort() # 对 a 的最后一个维度上的数据进行排序， 在括号里加入数字 0 或 1 即可在指定的维度上进行排序</p>
 </blockquote>
 <h2 id="4-广播机制（Broadcasting）"><a href="#4-广播机制（Broadcasting）" class="headerlink" title="4. 广播机制（Broadcasting）"></a>4. 广播机制（Broadcasting）</h2><blockquote>
 <p>a = np.array([[1,2,3,4],[5,6,7,8]])</p>
-</blockquote>
-<blockquote>
 <p>b = np.array([2,4,6,8])</p>
-</blockquote>
-<blockquote>
 <p>a+b # 结果是[[3,6,9,12],[7,10,13,16]]</p>
 </blockquote>
 <p>比如要对 a,b 进行 逐个元素的求和操作，由于 a,b 的形状不相同，所以会启动广播机制。numpy 允许我们在不需要对 b 进行多次拷贝的情况下完成计算。 3<em>1 的array与 1</em>2 的array相加，得到的是 3*2 的array。broadcasting 会逐个比较两个array的形状，如果不相等时，将维数是1的array进行拷贝拓展至shape匹配。</p>
 <h2 id="5-逻辑运算"><a href="#5-逻辑运算" class="headerlink" title="5. 逻辑运算"></a>5. 逻辑运算</h2><blockquote>
 <p>a = np.array([1,3,5,7,9])</p>
-</blockquote>
-<blockquote>
 <p>b = np.array([2,4,6,8,10])</p>
-</blockquote>
-<blockquote>
 <p>c = np.array([True, False, True, True, Flase])</p>
-</blockquote>
-<blockquote>
 <p>np.where(c, a, b) # 对于c中为True的位置选择a中元素，False的位置选择b中元素。结果为 [1, 4, 5, 7, 10]</p>
-</blockquote>
-<blockquote>
 <p>np.where(a&gt;5, 1, -1) # 对于a中元素满足条件(大于5)的位置填1，不满足条件的填-1</p>
 </blockquote>
-<h2 id="6-其他高级的-ndarray-处理"><a href="#6-其他高级的-ndarray-处理" class="headerlink" title="6. 其他高级的 ndarray 处理"></a>6. 其他高级的 ndarray 处理</h2><table>
+<h2 id="6-其他高级的-ndarray-处理"><a href="#6-其他高级的-ndarray-处理" class="headerlink" title="6. 其他高级的 ndarray 处理"></a>6. 其他高级的 ndarray 处理</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>函数</th>
@@ -435,19 +386,12 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="7-文件的输入输出"><a href="#7-文件的输入输出" class="headerlink" title="7. 文件的输入输出"></a>7. 文件的输入输出</h2><blockquote>
 <p>data = np.loadtxt(“file.txt”, delimiter=’,’) # 读取txt文件作为数组</p>
-</blockquote>
-<blockquote>
 <p>np.save(“some_array”, a) # 保存文件，其中a是一个数组, 当文件名为字符串时，系统会自动附上 .npy 的文件拓展名</p>
-</blockquote>
-<blockquote>
 <p>np.load(“some_array.npy”) # 读取文件中的数组</p>
-</blockquote>
-<blockquote>
 <p>np.savez(“array_archive.npz”, a=array1, b=array2) #将多个数组一起压缩保存</p>
-</blockquote>
-<blockquote>
 <p>arch = np.load(“array_archive.npz”) # 得到的 arch 是一个字典，可以通过 arch[‘a’],arch[‘b’] 访问上一条所保存的数组</p>
 </blockquote>
 
@@ -867,23 +811,6 @@ MathJax.Hub.Queue(function() {
     </div>
 
 </div>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
