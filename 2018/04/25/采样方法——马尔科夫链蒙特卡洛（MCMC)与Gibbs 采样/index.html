@@ -16,17 +16,17 @@
 <meta property="og:site_name" content="日盈则仄 月盈则食">
 <meta property="og:description" content="采样方法">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://bitcit.cn/img/采样方法-Fig1.png">
-<meta property="og:image" content="http://bitcit.cn/img/采样过程-Fig2.png">
-<meta property="og:image" content="http://bitcit.cn/img/采样方法-Fig3.png">
-<meta property="og:image" content="http://bitcit.cn/img/采样方法-Fig4.png">
-<meta property="og:image" content="http://bitcit.cn/img/采样方法-Fig5.png">
-<meta property="og:image" content="http://bitcit.cn/img/采样方法-Fig6.png">
-<meta property="og:updated_time" content="2018-04-24T08:23:32.000Z">
+<meta property="og:image" content="http://bitcit.cn/img/sampling_fig1.png">
+<meta property="og:image" content="http://bitcit.cn/img/sampling_fig2.png">
+<meta property="og:image" content="http://bitcit.cn/img/sampling_fig3.png">
+<meta property="og:image" content="http://bitcit.cn/img/sampling_fig4.png">
+<meta property="og:image" content="http://bitcit.cn/img/sampling_fig5.png">
+<meta property="og:image" content="http://bitcit.cn/img/sampling_fig6.png">
+<meta property="og:updated_time" content="2018-04-24T08:36:13.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="采样方法——马尔科夫链蒙特卡洛（MCMC)与 Gibbs 采样">
 <meta name="twitter:description" content="采样方法">
-<meta name="twitter:image" content="http://bitcit.cn/img/采样方法-Fig1.png">
+<meta name="twitter:image" content="http://bitcit.cn/img/sampling_fig1.png">
   
     <link rel="alternative" href="/atom.xml" title="日盈则仄 月盈则食" type="application/atom+xml">
   
@@ -200,7 +200,7 @@
 <h2 id="1-马尔科夫链蒙特卡洛（MCMC）方法"><a href="#1-马尔科夫链蒙特卡洛（MCMC）方法" class="headerlink" title="1. 马尔科夫链蒙特卡洛（MCMC）方法"></a>1. 马尔科夫链蒙特卡洛（MCMC）方法</h2><h3 id="1-1-服从概率分布-p-x-的样本产生"><a href="#1-1-服从概率分布-p-x-的样本产生" class="headerlink" title="1.1 服从概率分布$p(x)$的样本产生"></a>1.1 服从概率分布$p(x)$的样本产生</h3><p>在统计模拟中的一个重要问题就是给定概率分布$p(x)$,如何用计算机产生一系列服从$p(x)$分布的样本。当$p(x)$时均匀分布时，即$p(x)$~$Uniform(0,1)$，可以通过线性同余发生器产生伪随机数，然后通过变换得到对应的均匀分布。伪随机数生成器表达式子如下：<br>&emsp; &emsp;  $S_t = (a*S_{t-1} + b) \% m $<br>其中a,b,m为设定的常数。在ANSI的rand()函数中，$S_0 = 12345$, $a=11035515245$, $b=12345$, $m=2^{31}$。</p>
 <p>对于一些常见的分布，都可以基于均匀分布的样本来产生。例如正态分布$p(x)$可以通过Box-Muller变换产生，假设随机变量u，v相互独立且服从$Uniform(0,1)$,令：<br>&emsp;&emsp; $z_1 = \sqrt{-2lnu}cos(2 \pi v)$<br>&emsp;&emsp; $z_2 = \sqrt{-2lnv}cos(2 \pi u)$<br>则$z_1$,$z_2$相互独立，且服从正态分布。</p>
 <p>但是，当$p(x)$是一个很复杂的分布或者是一个高维分布时，很难生成符合分布的样本。</p>
-<h3 id="1-2-蒙特卡洛方法"><a href="#1-2-蒙特卡洛方法" class="headerlink" title="1.2 蒙特卡洛方法"></a>1.2 蒙特卡洛方法</h3><p>蒙特卡洛方法，又称为随机模拟，是一种基于重复随机采样来获得数值结果的计算方法。当做求解的问题是某个随机事件的发生概率或者某个随机变量的期望时，可以通过多次实验观察该事件是否发生，并用实验得到的概率来估计这一随机事件的概率。<br>历史上著名的布丰投针实验就是一个蒙特卡洛实验，问题是这样的：在一个平面上，假设该平面由平行且等距的木板铺设而成，如图所示：<br><img src="/img/采样方法-Fig1.png" alt="Fig 1"><br>设木板间距为$a$，针的长度为$l（l&lt;=a)$,现在随机往平面上投针，看针是否和木板的缝隙相交。布丰通过证明，针与木板缝隙相交的概率为：$p(x)=\frac{2<em>l}{\pi</em>a}$,该概率与装走率$\pi$有关。故可以通过投针实验对概率$p(x)$进行估计，从而转化为对圆周率$\pi$的估计。</p>
+<h3 id="1-2-蒙特卡洛方法"><a href="#1-2-蒙特卡洛方法" class="headerlink" title="1.2 蒙特卡洛方法"></a>1.2 蒙特卡洛方法</h3><p>蒙特卡洛方法，又称为随机模拟，是一种基于重复随机采样来获得数值结果的计算方法。当做求解的问题是某个随机事件的发生概率或者某个随机变量的期望时，可以通过多次实验观察该事件是否发生，并用实验得到的概率来估计这一随机事件的概率。<br>历史上著名的布丰投针实验就是一个蒙特卡洛实验，问题是这样的：在一个平面上，假设该平面由平行且等距的木板铺设而成，如图所示：<br><img src="/img/sampling_fig1.png" alt="Fig 1"><br>设木板间距为$a$，针的长度为$l（l&lt;=a)$,现在随机往平面上投针，看针是否和木板的缝隙相交。布丰通过证明，针与木板缝隙相交的概率为：$p(x)=\frac{2<em>l}{\pi</em>a}$,该概率与装走率$\pi$有关。故可以通过投针实验对概率$p(x)$进行估计，从而转化为对圆周率$\pi$的估计。</p>
 <h3 id="1-3-马尔科夫链"><a href="#1-3-马尔科夫链" class="headerlink" title="1.3 马尔科夫链"></a>1.3 马尔科夫链</h3><p>用$X_t$表示t时刻的状态，如果等式：<br>&emsp; &emsp; $p(X_{t+1}|X_t,X_{t-1},…,X_0) = p(X_{t+1}|X_t)$，t=0,1,2,…<br>成立，也就是说，t+1时刻的状态只与t时刻的状态有关，与t-1，t-2,…时刻没有依赖关系，则$X_0,X_1,…,X_t,X_{t+1},…$为马尔科夫链。</p>
 <p>记$P$为状态转移矩阵，$\pi(t)$为t时刻的状态分布，则t+1时刻的状态为$\pi(t+1) = \pi(t)*P$。对于非周期的的马尔科夫链，且任意两个状态之间是连通的，那么极限:$\lim_{n \to + \infty}P_{ij}^n$存在，且与i无关。记：</p>
 <script type="math/tex; mode=display">\pi(j) = \lim_{n \to + \infty}P_{ij}^n</script><p>上式中j可以取值为0,1,2,3…,将各个分量组合起来记为$\pi$，故$\pi$的分布是唯一的。即存在唯一的$\pi$,使得等式$\pi=\pi*P$成立。$\pi$为马尔科夫链的平稳分布。这样，最后得到的平稳分布$\pi$与初始状态$\pi(0)$的取值没有任何关系，只与由转移矩阵$P$决定。现在如果要产生服从$p(x)$分布的样本，我们就可以找到平稳分布$\pi(x)=p(x)$的转移矩阵$P$,随意生成（因为最后的平稳分布于初始状态的取值无关）一个初始样本$x_0$ ，通过状态转移矩阵$P$依次产生样本$x_1,x_2,…$,由马尔科夫平稳性可知，状态经过足够多轮的转移之后会趋于稳定，即达到平稳分布。假设经过m轮转换后达到平稳，则我们可以选取$x_m,x_{m+1},x_{m+2},…$作为服从$\pi$分布的样本。</p>
@@ -209,14 +209,14 @@
 <script type="math/tex; mode=display">\sum_i\pi(i)P_{ij}=\sum_i\pi(j)P_{ji}=\pi(j)\sum_iP_{ji}=\pi(j)</script><p>上式对于j为任何状态时都成立，故有$\pi P=\pi$,此时的$\pi$为$P$的平稳分布。</p>
 <p>为了和教材表示方式一致，现在我们定义$p(i)$为状态i的出现概率，$q(i,j)$为从状态i转移到状态j的概率，我们现在的目的是找到一个状态转移矩阵Q,使得满足细平稳条件，即：</p>
 <script type="math/tex; mode=display">p(i)q(i,j)=p(j)q(j,i)</script><p>但是在通常情况下该等式是不成立的，即$p(i)q(i,j) \neq (j)q(j,i)$，所有我们考虑在不等号两端分别乘上对应的因子来使得等号成立，</p>
-<script type="math/tex; mode=display">p(i)q(i,j) \alpha(i,j) =p(j)q(j,i) \alpha(j,i)</script><p>为了让等式总是成立，选取$\alpha (i,j)=p(j)q(j,i)$,$\alpha (j,i)=p(i)q(i,j)$。$\alpha (i,j)$ 可以理解为，从状态i转移到状态j后，以$\alpha (i,j)$的概率拒绝转移。现在细平稳条件就恒成立了：<script type="math/tex">p(i)q'(i,j)=p(j)q'(j,i)</script><br>其中$q’(i,j)=q(i,j)\alpha(i,j)$,$q’(j,i)=q(j,i)\alpha(j,i)$。由此产生了一个新的转移矩阵Q’。以上过程就是MCMC采样算法，具体算法如下所示：<br><img src="/img/采样过程-Fig2.png" alt="Fig 2"><br>MCMC算法已经能够比较好的工作了，但是如果$\alpha (i,j)$太小时，就会使得状态很难得到转移，收敛到平稳分布$p(x)$的速度太慢，所以要想办法提高转移的概率。对于等式$p(i)q(i,j) \alpha(i,j) =p(j)q(j,i) \alpha(j,i)$，如果将等式两端的$\alpha$同时f放大一定的倍数，等式依然成立。因为$\alpha$为是否接受转移的概率，最大值为1，那么我们可以将等式两边同时放大$k$倍，其中$k=\frac{1}{max[\alpha(i,j),\alpha(j,i)]}$。放大后的$\alpha$记为$\alpha’$，当$\alpha(i,j)&lt;\alpha(j,i)$时，$k=\frac{1}{\alpha(j,i)}$，此时$\alpha’(i,j)=\frac{p(j)q(j,i)}{p(i)q(i,j)}$;当$\alpha(i,j)&gt;= \alpha(j,i)$时，$k=\frac{1}{\alpha(i,j)}$，此时$\alpha’(i,j)=1$。综上可知，$\alpha’(i,j)=Min(\frac{p(j)q(j,i)}{p(i)q(i,j)}, 1)$。这样就得到了Metropolis-Hastings 算法：<br><img src="/img/采样方法-Fig3.png" alt="Fig 3"></p>
-<h2 id="2-Gibbs-采样"><a href="#2-Gibbs-采样" class="headerlink" title="2. Gibbs 采样"></a>2. Gibbs 采样</h2><p>在Metropolis-Hastings 算法中，因为接受概率$\alpha(i,j)$较大，所以，能在较少的转移次数下使得分布达到平稳。但是对于分布$p(x)$中x的维度较高时，算法的效率依然不高（因为维度较高时需要更多次的转移才能使得分布达到平稳，由于有接受率的存在，效率就会降低。你想啊，假设接受率恒为0.8时，低维的时候，假设要转移100次才能达到平稳分布，每一次尝试转移只有0.8的几率能偶成果，那么要实现转移100次，平均来说需要尝试转移100/0.8=125次，有125-100=25次尝试转移是没有成功的；在高维的时候，假设要转移100000次才能达到平稳分布，平均来说需要尝试转移100000/0.8=125000，有125000-100000=25000次转移是没有成功的。假设计算机每秒能完成100次尝试转移，白白浪费掉25次转移的机会可能不足一提，计算机只要多算0.25s就可以了，但浪费掉25000次转移的机会对于计算机来说在就需要多计算250s。）所以，我们想，有没有办法使得接受率恒为1呢？这样就在计算的过程中就不会做无用功了。<br><img src="/img/采样方法-Fig4.png" alt="Fig 4"><br>如上图所示，针对x是二维的情形，对于$A(x_1,y_1)$,$B(x_1,y_2)$两点，A，B的x坐标值相同，我们发现：</p>
+<script type="math/tex; mode=display">p(i)q(i,j) \alpha(i,j) =p(j)q(j,i) \alpha(j,i)</script><p>为了让等式总是成立，选取$\alpha (i,j)=p(j)q(j,i)$,$\alpha (j,i)=p(i)q(i,j)$。$\alpha (i,j)$ 可以理解为，从状态i转移到状态j后，以$\alpha (i,j)$的概率拒绝转移。现在细平稳条件就恒成立了：<script type="math/tex">p(i)q'(i,j)=p(j)q'(j,i)</script><br>其中$q’(i,j)=q(i,j)\alpha(i,j)$,$q’(j,i)=q(j,i)\alpha(j,i)$。由此产生了一个新的转移矩阵Q’。以上过程就是MCMC采样算法，具体算法如下所示：<br><img src="/img/sampling_fig2.png" alt="Fig 2"><br>MCMC算法已经能够比较好的工作了，但是如果$\alpha (i,j)$太小时，就会使得状态很难得到转移，收敛到平稳分布$p(x)$的速度太慢，所以要想办法提高转移的概率。对于等式$p(i)q(i,j) \alpha(i,j) =p(j)q(j,i) \alpha(j,i)$，如果将等式两端的$\alpha$同时f放大一定的倍数，等式依然成立。因为$\alpha$为是否接受转移的概率，最大值为1，那么我们可以将等式两边同时放大$k$倍，其中$k=\frac{1}{max[\alpha(i,j),\alpha(j,i)]}$。放大后的$\alpha$记为$\alpha’$，当$\alpha(i,j)&lt;\alpha(j,i)$时，$k=\frac{1}{\alpha(j,i)}$，此时$\alpha’(i,j)=\frac{p(j)q(j,i)}{p(i)q(i,j)}$;当$\alpha(i,j)&gt;= \alpha(j,i)$时，$k=\frac{1}{\alpha(i,j)}$，此时$\alpha’(i,j)=1$。综上可知，$\alpha’(i,j)=Min(\frac{p(j)q(j,i)}{p(i)q(i,j)}, 1)$。这样就得到了Metropolis-Hastings 算法：<br><img src="/img/sampling_fig3.png" alt="Fig 3"></p>
+<h2 id="2-Gibbs-采样"><a href="#2-Gibbs-采样" class="headerlink" title="2. Gibbs 采样"></a>2. Gibbs 采样</h2><p>在Metropolis-Hastings 算法中，因为接受概率$\alpha(i,j)$较大，所以，能在较少的转移次数下使得分布达到平稳。但是对于分布$p(x)$中x的维度较高时，算法的效率依然不高（因为维度较高时需要更多次的转移才能使得分布达到平稳，由于有接受率的存在，效率就会降低。你想啊，假设接受率恒为0.8时，低维的时候，假设要转移100次才能达到平稳分布，每一次尝试转移只有0.8的几率能偶成果，那么要实现转移100次，平均来说需要尝试转移100/0.8=125次，有125-100=25次尝试转移是没有成功的；在高维的时候，假设要转移100000次才能达到平稳分布，平均来说需要尝试转移100000/0.8=125000，有125000-100000=25000次转移是没有成功的。假设计算机每秒能完成100次尝试转移，白白浪费掉25次转移的机会可能不足一提，计算机只要多算0.25s就可以了，但浪费掉25000次转移的机会对于计算机来说在就需要多计算250s。）所以，我们想，有没有办法使得接受率恒为1呢？这样就在计算的过程中就不会做无用功了。<br><img src="/img/sampling_fig4.png" alt="Fig 4"><br>如上图所示，针对x是二维的情形，对于$A(x_1,y_1)$,$B(x_1,y_2)$两点，A，B的x坐标值相同，我们发现：</p>
 <script type="math/tex; mode=display">p(x_1,y_1)p(y_2|x_1)=p(x_1)p(y_1|x_1)p(y_2|x_1)</script><script type="math/tex; mode=display">p(x_1,y_2)p(y_1|x_1)=p(x_1)p(y_2|x_1)p(y_1|x_1)</script><p>观察以上两个式子的右端，惊讶地发现它们竟然是一样的，所以有：</p>
 <script type="math/tex; mode=display">p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1)</script><p>咦？是不是发现了什么？这不就是我们前面所说的细平稳条件吗？这就说明，沿着平行y轴的方向进行状态转移时满足细平稳定理。<br>同样，对于点$A(x_1,y_1)$,$C(x_2,y_1)$,有：</p>
 <script type="math/tex; mode=display">p(x_1,y_1)p(x_2|y_1)=p(y_1)p(x_1|y_1)p(x_2|y_1)</script><script type="math/tex; mode=display">p(x_2,y_1)p(x_1|y_1)=p(y_1)p(x_2|y_1)p(x_1|y_1)</script><p>得到：</p>
 <script type="math/tex; mode=display">p(x_1,y_1)p(x_2|y_1)=p(x_2,y_1)p(x_1|y_1)</script><p>同样满足细平稳条件，这就说明，沿着平行x轴的方向进行状态转移时满足细平稳定理。<br>对于D点，要求A转移过去，由于找不到满足符合细平稳条件的等式，故将A到D的转移概率设置为0，从D转移到A的转移概率设置为0，这样也就满足细平稳条件了。所有对于上图最终构造的转移矩阵Q为：</p>
-<script type="math/tex; mode=display">Q(A \rightarrow B) = p(y_2,x_1)</script><script type="math/tex; mode=display">Q(A \rightarrow C) = p(x_2,y_1)</script><script type="math/tex; mode=display">Q(A \rightarrow D) = 0</script><p>这样得到的二维Gibbs 采样算法如下所示：<br><img src="/img/采样方法-Fig5.png" alt="Fig 5"><br>如上图所示在采样过程过程中，马尔可夫链只沿着平行于坐标轴的方向进行转移。<br>可以将该过程推广至多维的情况，当$x_1$是多维的时候，下列式子依然成立，也就是说，依然满足细平稳条件：</p>
-<script type="math/tex; mode=display">p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1)</script><p>从而得到一般的Gibbs 采样算法：<br><img src="/img/采样方法-Fig6.png" alt="Fig 6"><br>在马尔可夫链转移的过程中，状态只会沿着平行于坐标轴的方向转移，例如沿着平行于$x_i$轴的方向进行转移，转移的概率由$p(x_i|x_1,x_2,…,x_{i-1},x_{i+1},…x_n)$确定，对于无法沿着单一坐标轴进行转移的状态之间的概率设置为0。<br>注意：最后采样得到的样本并不独立，因为我们想要得到的是符合给定概率分布的样本，并不要求独立。并且，算法中的坐标轮换采样并不是固定的，可以任意选择，此时状态转移矩阵Q中的任何两个点的转移概率中就会包含坐标轴选择的 概率。</p>
+<script type="math/tex; mode=display">Q(A \rightarrow B) = p(y_2,x_1)</script><script type="math/tex; mode=display">Q(A \rightarrow C) = p(x_2,y_1)</script><script type="math/tex; mode=display">Q(A \rightarrow D) = 0</script><p>这样得到的二维Gibbs 采样算法如下所示：<br><img src="/img/sampling_fig5.png" alt="Fig 5"><br>如上图所示在采样过程过程中，马尔可夫链只沿着平行于坐标轴的方向进行转移。<br>可以将该过程推广至多维的情况，当$x_1$是多维的时候，下列式子依然成立，也就是说，依然满足细平稳条件：</p>
+<script type="math/tex; mode=display">p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1)</script><p>从而得到一般的Gibbs 采样算法：<br><img src="/img/sampling_fig6.png" alt="Fig 6"><br>在马尔可夫链转移的过程中，状态只会沿着平行于坐标轴的方向转移，例如沿着平行于$x_i$轴的方向进行转移，转移的概率由$p(x_i|x_1,x_2,…,x_{i-1},x_{i+1},…x_n)$确定，对于无法沿着单一坐标轴进行转移的状态之间的概率设置为0。<br>注意：最后采样得到的样本并不独立，因为我们想要得到的是符合给定概率分布的样本，并不要求独立。并且，算法中的坐标轮换采样并不是固定的，可以任意选择，此时状态转移矩阵Q中的任何两个点的转移概率中就会包含坐标轴选择的 概率。</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] 机器学习 周志华<br><br>[2] <a href="https://cosx.org/2013/01/lda-math-mcmc-and-gibbs-sampling" target="_blank" rel="noopener">LDA-math-MCMC 和 Gibbs Sampling</a></p>
 
       
@@ -499,15 +499,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pandas</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">machineLearning</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sampling</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">pandas</a>
               </li>
             
             <div class="clearfix"></div>
