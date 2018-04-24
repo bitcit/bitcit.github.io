@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://www.zybuluo.com/static/img/toolbar-manager.jpg">
 <meta property="og:image" content="https://www.zybuluo.com/static/img/toolbar-reader.jpg">
 <meta property="og:image" content="https://www.zybuluo.com/static/img/file-list.png">
-<meta property="og:updated_time" content="2018-04-24T01:55:32.000Z">
+<meta property="og:updated_time" content="2018-04-24T03:39:45.960Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="采样方法——马尔科夫链蒙特卡洛（MCMC)与 Gibbs 采样">
 <meta name="twitter:description" content="采样方法">
@@ -196,11 +196,12 @@
 <li>Gibbs 采样</li>
 </ul>
 <a id="more"></a>
-<h2 id="1-马尔科夫链蒙特卡洛（MCMC）方法"><a href="#1-马尔科夫链蒙特卡洛（MCMC）方法" class="headerlink" title="1. 马尔科夫链蒙特卡洛（MCMC）方法"></a>1. 马尔科夫链蒙特卡洛（MCMC）方法</h2><h3 id="1-1-服从概率分布-p-x-的样本产生"><a href="#1-1-服从概率分布-p-x-的样本产生" class="headerlink" title="1.1 服从概率分布$p(x)$的样本产生"></a>1.1 服从概率分布$p(x)$的样本产生</h3><p>在统计模拟中的一个重要问题就是给定概率分布$p(x)$,如何用计算机产生一系列服从$p(x)$分布的样本。当$p(x)$时均匀分布时，即$p(x)$~$Uniform(0,1)$，可以通过线性同余发生器产生伪随机数，然后通过变换得到对应的均匀分布。伪随机数生成器表达式子如下：<br>&emsp; &emsp;  $S_t = (a*S_{t-1} + b) \% m $<br>其中a,b,m为设定的常数。在ANSI的rand()函数中，$S_0 = 12345$, $a=11035515245$, $b=12345$, $m=2^{31}$。</p>
+<h2 id="1-马尔科夫链蒙特卡洛（MCMC）方法"><a href="#1-马尔科夫链蒙特卡洛（MCMC）方法" class="headerlink" title="1. 马尔科夫链蒙特卡洛（MCMC）方法"></a>1. 马尔科夫链蒙特卡洛（MCMC）方法</h2><h3 id="1-1-服从概率分布-p-x-的样本产生"><a href="#1-1-服从概率分布-p-x-的样本产生" class="headerlink" title="1.1 服从概率分布$p(x)$的样本产生"></a>1.1 服从概率分布$p(x)$的样本产生</h3><p>$$<br>\begin{eqnarray}<br>\nabla\cdot\vec{E} &amp;=&amp; \frac{\rho}{\epsilon_0} \<br>\nabla\cdot\vec{B} &amp;=&amp; 0 \<br>\nabla\times\vec{E} &amp;=&amp; -\frac{\partial B}{\partial t} \<br>\nabla\times\vec{B} &amp;=&amp; \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)<br>\end{eqnarray}<br>$$<br>在统计模拟中的一个重要问题就是给定概率分布$p(x)$,如何用计算机产生一系列服从$p(x)$分布的样本。当$p(x)$时均匀分布时，即$p(x)$~$Uniform(0,1)$，可以通过线性同余发生器产生伪随机数，然后通过变换得到对应的均匀分布。伪随机数生成器表达式子如下：<br>&emsp; &emsp;  $S_t = (a*S_{t-1} + b) \% m $<br>其中a,b,m为设定的常数。在ANSI的rand()函数中，$S_0 = 12345$, $a=11035515245$, $b=12345$, $m=2^{31}$。</p>
 <p>对于一些常见的分布，都可以基于均匀分布的样本来产生。例如正态分布$p(x)$可以通过Box-Muller变换产生，假设随机变量u，v相互独立且服从$Uniform(0,1)$,令：<br>&emsp;&emsp; $z_1 = \sqrt{-2lnu}cos(2 \pi v)$<br>&emsp;&emsp; $z_2 = \sqrt{-2lnv}cos(2 \pi u)$<br>则$z_1$,$z_2$相互独立，且服从正态分布。</p>
 <p>但是，当$p(x)$是一个很复杂的分布或者是一个高维分布时，很难生成符合分布的样本。</p>
 <h3 id="1-2-马尔科夫链"><a href="#1-2-马尔科夫链" class="headerlink" title="1.2 马尔科夫链"></a>1.2 马尔科夫链</h3><p>用$X_t$表示t时刻的状态，如果等式：<br>&emsp; &emsp; $p(X_{t+1}|X_t,X_{t-1},…,X_0) = p(X_{t+1}|X_t)$，t=0,1,2,…<br>成立，也就是说，t+1时刻的状态只与t时刻的状态有关，与t-1，t-2,…时刻没有依赖关系，则$X_0,X_1,…,X_t,X_{t+1},…$为马尔科夫链。</p>
 <p>记$P$为状态转移矩阵，$\pi(t)$为t时刻的状态分布，则t+1时刻的状态为$$\pi(t+1) = \pi(t)<em>P$$。对于非周期的的马尔科夫链，且任意两个状态之间是连通的，那么极限:$$\lim_{n \to + \infty}P_{ij}^n$$存在，且与i无关。记：$$\pi(j) = \lim_{n \to + \infty}P_{ij}^n$$上式中j可以取值为0,1,2,3…,将各个分量组合起来记为$\pi$，故$\pi$的分布是唯一的。即存在唯一的$\pi$,使得等式$\pi=\pi</em>P$成立。$\pi$为马尔科夫链的平稳分布。这样，最后得到的平稳分布$\pi$与初始状态$\pi(0)$的取值没有任何关系，只与由转移矩阵$P$决定。现在如果要产生服从$p(x)$分布的样本，我们就可以找到平稳分布$\pi(x)=p(x)$的转移矩阵$P$,随意生成（因为最后的平稳分布于初始状态的取值无关）一个初始样本$x_0$ ，通过状态转移矩阵$P$依次产生样本$x_1,x_2,…$,由马尔科夫平稳性可知，状态经过足够多轮的转移之后会趋于稳定，即达到平稳分布。假设经过m轮转换后达到平稳，则我们可以选取$x_m,x_{m+1},x_{m+2},…$作为服从$\pi$分布的样本。</p>
+<p>$$<br>\begin{eqnarray}<br>\nabla\cdot\vec{E} &amp;=&amp; \frac{\rho}{\epsilon_0} \<br>\nabla\cdot\vec{B} &amp;=&amp; 0 \<br>\nabla\times\vec{E} &amp;=&amp; -\frac{\partial B}{\partial t} \<br>\nabla\times\vec{B} &amp;=&amp; \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)<br>\end{eqnarray}<br>$$</p>
 <h1 id="欢迎使用-Cmd-Markdown-编辑阅读器"><a href="#欢迎使用-Cmd-Markdown-编辑阅读器" class="headerlink" title="欢迎使用 Cmd Markdown 编辑阅读器"></a>欢迎使用 Cmd Markdown 编辑阅读器</h1><hr>
 <p>我们理解您需要更便捷更高效的工具记录思想，整理笔记、知识，并将其中承载的价值传播给他人，<strong>Cmd Markdown</strong> 是我们给出的答案 —— 我们为记录思想和分享知识提供更专业的工具。 您可以使用 Cmd Markdown：</p>
 <blockquote>
@@ -698,6 +699,23 @@ MathJax.Hub.Queue(function() {
     </div>
 
 </div>
-  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>
