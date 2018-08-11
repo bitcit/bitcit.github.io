@@ -9,14 +9,14 @@
   <title>Python2中的编码问题 | 日盈则仄 月盈则食</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Python2中字符串的编码与解码">
-<meta name="keywords" content="enconding &amp; decoding,python">
+<meta name="keywords" content="python,enconding &amp; decoding">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python2中的编码问题">
 <meta property="og:url" content="http://bitcit.cn/2018/06/15/Python2 中的编码问题/index.html">
 <meta property="og:site_name" content="日盈则仄 月盈则食">
 <meta property="og:description" content="Python2中字符串的编码与解码">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-11T13:10:04.683Z">
+<meta property="og:updated_time" content="2018-08-11T13:18:32.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python2中的编码问题">
 <meta name="twitter:description" content="Python2中字符串的编码与解码">
@@ -185,9 +185,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<p>﻿</p>
-<h2 id="Python2-中的编码问题"><a href="#Python2-中的编码问题" class="headerlink" title="Python2 中的编码问题"></a>Python2 中的编码问题</h2><h3 id="part-1"><a href="#part-1" class="headerlink" title="part 1:"></a>part 1:</h3><p>python2 中的字符串有两种表示形式： str 和 unicode，所谓的编码（encode）就是将 unicode 转换成 str ， 而解码（decode）就是将 str 转换为 unicode 。&lt;/br&gt;</p>
+        <p>﻿</p>
+<h2 id="Python2-中的编码问题"><a href="#Python2-中的编码问题" class="headerlink" title="Python2 中的编码问题"></a>Python2 中的编码问题</h2><a id="more"></a>
+<h3 id="part-1"><a href="#part-1" class="headerlink" title="part 1:"></a>part 1:</h3><p>python2 中的字符串有两种表示形式： str 和 unicode，所谓的编码（encode）就是将 unicode 转换成 str ， 而解码（decode）就是将 str 转换为 unicode 。&lt;/br&gt;</p>
 <h3 id="part-2"><a href="#part-2" class="headerlink" title="part 2:"></a>part 2:</h3><p>python2中默认编码是ascii，查看方式：&lt;/br&gt;<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">print</span> sys.getdefaultencoding()</span><br><span class="line"><span class="comment"># 输出: "ascii"</span></span><br></pre></td></tr></table></figure></p>
 <p>可以通过在文件头加上语句指定编码方式：&lt;/br&gt;<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">s = <span class="string">"中国"</span> <span class="comment">#必须在文件头加上utf8编码方式的声明，否则默认以ascii编码，而中文不是ascii编码的字符，print s 时会出错</span></span><br><span class="line"><span class="keyword">print</span> type(s) <span class="comment"># 此时 s 是 str 类型</span></span><br><span class="line">s1 = s.decode(<span class="string">"utf-8"</span>) <span class="comment"># s 从 str 类型转换为 unicode 类型， 解码方式为 utf-8, 此时 s1 是 unicode 类型</span></span><br><span class="line">ss = <span class="string">u"中国"</span> <span class="comment"># 可以通过这种方式指定 ss 的类型为 unicode。</span></span><br><span class="line">ss1 = ss.encode(<span class="string">"gbk"</span>, <span class="string">"ignore"</span>) <span class="comment">#将 ss 转换为 str 类型， 编码格式是 gbk, 忽略其中有异常的编码</span></span><br><span class="line">ss1 = ss.encode(<span class="string">"gbk"</span>, <span class="string">"replace"</span>) <span class="comment">#替换其中有异常的编码</span></span><br><span class="line">s2 = s.encode(<span class="string">"gbk"</span>) <span class="comment">#会出现 UnicodeDecodeError，由于文件头有指定编码方式，所有此时 s 是 utf8 编码的 str 类型， 而编码（encode）是 unicode 到 str 的转换， 此时 s 已经是 str 类型了， 所以此时 Python 会根据 sys.getdefaultencoding() 的编码方式进行自动的解码操作，默认的编码方式是 ascii，s2 = s.encode("gbk") 实际上进行了两步， s2 = s.decode("asii").encode("gbk"), 由于 s 是 utf8 编码的 str 类型， 按 ascii 进行解码就会出错。</span></span><br><span class="line">s2 = s.decode(<span class="string">"utf-8"</span>).encode(<span class="string">"gbk"</span>) <span class="comment">#能正常运行</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="part-3"><a href="#part-3" class="headerlink" title="part 3:"></a>part 3:</h3><p>修改默认的文件编码方式：&lt;/br&gt;<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">improt sys</span><br><span class="line">reload(sys) <span class="comment">#由于sys.setdefaultencoding方法在Python导入site.py后就删除了，不能被调用，需要重新载入，否则会出现 AttributeError: 'module' object has no attribute 'setdefaultencoding' 错误</span></span><br><span class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</span><br></pre></td></tr></table></figure></p>
@@ -226,11 +226,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">enconding & decoding</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">enconding & decoding</a>
         		</li>
       		
 		</ul>
@@ -473,10 +473,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">enconding & decoding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
@@ -494,6 +490,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sampling</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">enconding & decoding</a>
               </li>
             
             <div class="clearfix"></div>

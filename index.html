@@ -182,14 +182,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<p>﻿</p>
-<h2 id="Python2-中的编码问题"><a href="#Python2-中的编码问题" class="headerlink" title="Python2 中的编码问题"></a>Python2 中的编码问题</h2><h3 id="part-1"><a href="#part-1" class="headerlink" title="part 1:"></a>part 1:</h3><p>python2 中的字符串有两种表示形式： str 和 unicode，所谓的编码（encode）就是将 unicode 转换成 str ， 而解码（decode）就是将 str 转换为 unicode 。&lt;/br&gt;</p>
-<h3 id="part-2"><a href="#part-2" class="headerlink" title="part 2:"></a>part 2:</h3><p>python2中默认编码是ascii，查看方式：&lt;/br&gt;<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">print</span> sys.getdefaultencoding()</span><br><span class="line"><span class="comment"># 输出: "ascii"</span></span><br></pre></td></tr></table></figure></p>
-<p>可以通过在文件头加上语句指定编码方式：&lt;/br&gt;<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">s = <span class="string">"中国"</span> <span class="comment">#必须在文件头加上utf8编码方式的声明，否则默认以ascii编码，而中文不是ascii编码的字符，print s 时会出错</span></span><br><span class="line"><span class="keyword">print</span> type(s) <span class="comment"># 此时 s 是 str 类型</span></span><br><span class="line">s1 = s.decode(<span class="string">"utf-8"</span>) <span class="comment"># s 从 str 类型转换为 unicode 类型， 解码方式为 utf-8, 此时 s1 是 unicode 类型</span></span><br><span class="line">ss = <span class="string">u"中国"</span> <span class="comment"># 可以通过这种方式指定 ss 的类型为 unicode。</span></span><br><span class="line">ss1 = ss.encode(<span class="string">"gbk"</span>, <span class="string">"ignore"</span>) <span class="comment">#将 ss 转换为 str 类型， 编码格式是 gbk, 忽略其中有异常的编码</span></span><br><span class="line">ss1 = ss.encode(<span class="string">"gbk"</span>, <span class="string">"replace"</span>) <span class="comment">#替换其中有异常的编码</span></span><br><span class="line">s2 = s.encode(<span class="string">"gbk"</span>) <span class="comment">#会出现 UnicodeDecodeError，由于文件头有指定编码方式，所有此时 s 是 utf8 编码的 str 类型， 而编码（encode）是 unicode 到 str 的转换， 此时 s 已经是 str 类型了， 所以此时 Python 会根据 sys.getdefaultencoding() 的编码方式进行自动的解码操作，默认的编码方式是 ascii，s2 = s.encode("gbk") 实际上进行了两步， s2 = s.decode("asii").encode("gbk"), 由于 s 是 utf8 编码的 str 类型， 按 ascii 进行解码就会出错。</span></span><br><span class="line">s2 = s.decode(<span class="string">"utf-8"</span>).encode(<span class="string">"gbk"</span>) <span class="comment">#能正常运行</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="part-3"><a href="#part-3" class="headerlink" title="part 3:"></a>part 3:</h3><p>修改默认的文件编码方式：&lt;/br&gt;<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">improt sys</span><br><span class="line">reload(sys) <span class="comment">#由于sys.setdefaultencoding方法在Python导入site.py后就删除了，不能被调用，需要重新载入，否则会出现 AttributeError: 'module' object has no attribute 'setdefaultencoding' 错误</span></span><br><span class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</span><br></pre></td></tr></table></figure></p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]<a href="http://www.cnblogs.com/jinhaolin/p/5128973.html" target="_blank" rel="noopener">pyton2 编码总结</a><br>[2]<a href="https://www.cnblogs.com/harrychinese/archive/2012/01/19/change_python_default_encoding.html" target="_blank" rel="noopener">修改Python默认的编码方式</a></p>
-
+        <p>﻿</p>
+<h2 id="Python2-中的编码问题"><a href="#Python2-中的编码问题" class="headerlink" title="Python2 中的编码问题"></a>Python2 中的编码问题</h2>
+        
+          <a class="article-more-a" href="/2018/06/15/Python2 中的编码问题/#more">more >></a>
+        
       
 
       
@@ -202,11 +199,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">enconding & decoding</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">enconding & decoding</a>
         		</li>
       		
 		</ul>
@@ -277,23 +274,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<h2 id="MapReduce开发总结"><a href="#MapReduce开发总结" class="headerlink" title="MapReduce开发总结"></a>MapReduce开发总结</h2><p>1.在java实现的MapReduce程序中，需要写一个继承 org.apache.hadoop.mapreduce.Mapper的类和一个继承 org.apache.hadoop.mapreduce.Reducer的类，在实现的类中分别重写map和reduce方法。创建一个含有主函数入口的类，在主函数中进行MapReduce任务相关的配置。&lt;/br&gt;<br>主要配置如下几个条目：&lt;/br&gt;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Job;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.lib.input.FileInputFormat;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.util.GenericOptionsParser;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyWapResin</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">		Job job = Job.getInstance(conf);</span><br><span class="line">		<span class="comment">//Job job = new Job(conf); //老版本方法</span></span><br><span class="line">		job.setJarByClass(MyWapResin.class); <span class="comment">//设置Jar的入口类</span></span><br><span class="line">		job.setJobName(<span class="string">"MyWapResin"</span>); </span><br><span class="line">		String[] otherArgs = <span class="keyword">new</span> GenericOptionsParser(conf, args).getRemainingArgs(); <span class="comment">//因为在运行jar时有 -Dproperty=value 参数，将其过滤掉</span></span><br><span class="line"></span><br><span class="line">		FileInputFormat.addInputPaths(job, otherArgs[<span class="number">0</span>]); <span class="comment">//输入文件的路径，多条路径之间用逗号分隔</span></span><br><span class="line">		FileOutputFormat.setOutputPath(job, <span class="keyword">new</span> Path(otherArgs[<span class="number">1</span>])); <span class="comment">//输出文件的路径，要求定位在一个原本不存在的路径下，否个运行时会报错</span></span><br><span class="line">		</span><br><span class="line">		job.setMapperClass(MyWapResinMapper.class);<span class="comment">//指定Mppaer类</span></span><br><span class="line">		job.setReducerClass(MyWapResinReducer.class);<span class="comment">//指定Reducer类</span></span><br><span class="line">		<span class="comment">//设置输入key：value的类型，可以省略不设置</span></span><br><span class="line">		job.setMapOutputKeyClass(Text.class);</span><br><span class="line">		job.setMapOutputValueClass(Text.class);</span><br><span class="line">		<span class="comment">//设置Reducer输出的key:value的类型</span></span><br><span class="line">		job.setOutputKeyClass(Text.class);</span><br><span class="line">		job.setOutputValueClass(Text.class);</span><br><span class="line">		<span class="comment">//设置Reducer任务的个数，决定最后输出有多少个文件</span></span><br><span class="line">		job.setNumReduceTasks(<span class="number">100</span>);</span><br><span class="line">		<span class="comment">//等待程序结束，参数true表示打印出进度等相关信息</span></span><br><span class="line">		<span class="keyword">boolean</span> res = job.waitForCompletion(<span class="keyword">true</span>);</span><br><span class="line">		System.exit(res ? <span class="number">0</span> : <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>2.MapReduce运行过程的输出信息中有一个条目是：&lt;/br&gt;<br><code>The url to track the job: http://xxx.xxx.xxx_xxx_xxx/</code><br>在浏览器中打开对应的url可以查看该任务的运行相关日志，方便对程序进行debug。在debug过程中，我们可能需要在实现mapreduce的程序中使用 <code>System.out.println(&quot;xxx&quot;)</code> 来查看程序执行的状态，该输出信息不会被输出到标准输出中，而是输出在hadoop安装的目录 logs/userlogs/ 对应任务的 stdout 文件中，也可指直接在对应的url上查看对应的log信息中查看到。&lt;/br&gt;</p>
-<hr>
-<p>3.在elipse编译含有main函数的类时，出现 “找不到或无法加载主类” 的错误，此时在左侧栏的该项目文件标志上方有个红色的感叹号。。主要原因是，原来从外部加载的一些jar文件找不到了（外部的jar文件位置发生变化或者被删除）。解决办法是，在该项目下鼠标右键 Properties-&gt;Java Build Path-&gt;Libraries,将其中丢失的jar包移除即可。&lt;/br&gt;</p>
-<hr>
-<p>4.将相关的项目使用eclipse导出jar包，需要指定入口的main class。通过命令 <code>hadoop jar MyWapResin.jar [-Dmapreduce.map.memory.mb=4096 -Dmapreduce.reduce.memory.mb=8192 -Dmapreduce.map.java.opts=-Xmx3072m -Dmapreduce.reduce.java.opts=-Xmx6144m  -Dmapreduce.min.split.size=3000g ...] inputPath outputPath</code> 执行相应的MapReduce程序。</p>
-<hr>
-<p>5.通过Xshell等其他工具登录到开发机上时，此时Linux会开启一个进程（父进程），此后运行的各种程序都是该进程（父进程）的子进程，一旦网络不稳定等各种原因导致本地与开发机断开连接，对应的父进程就会被关闭，因而相关的子进程也就被关闭了，导致某些需要长时间执行的子进程不能正常执行。解决办法：&lt;/br&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nohup ./xxx.sh &amp;    #让提交的命令忽略hangup信号，&amp;让进程转到后台运行，输出信息会定位在当前目录下的 nohup.out 文件中</span><br><span class="line">setsid ./xxx.sh  #将该进程的父进程指定为 1 （init进程）</span><br><span class="line">[ctrl+z]  #将当前运行的进程挂起</span><br><span class="line">jobs  #查看当前所有的进程</span><br><span class="line">bg xxxx  #将进程 xxxx 转入后台执行</span><br><span class="line">fg xxxx  #将进程 xxxx 撞到前台执行</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>6.使用hadoop-streaming.jar运行Python编写的mapreduce程序相关设置：&lt;/br&gt;<br>用两个.py文件分别实现mapper和reducer对应的操作，其输入都来自于标准输入 stdin 。与java不同的是，在reduce阶段，java的输入是 {key_1, list(value_1, value_2, …)}, 此时reducer获得的values是一堆value的集合；而Python中reducer阶段输入的是{key_1, value_1}，就是mapper的输出一行数据，只不过在mapper在很多行数据传给reducer之前会根据key进行排序，然后依次喂给reducer，所以reducer处理的数据中key相同的数据会处于相邻的行。&lt;/br&gt;<br>可以通过在放到集群上运行之前在小数据上通过 <code>cat data.txt | ./mapper.py | sort | ./reducer.py &gt; output.txt</code> 进行测试。&lt;/br&gt;<br>shell 脚本配置示例：&lt;/br&gt;<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">stream="/usr/lib/hadoop-mapreduce/hadoop-streaming.jar" #根据hadoop实际安装的位置进行配置</span><br><span class="line">inputPath="xxx/xxx/" #根据实际情况配置</span><br><span class="line">outputPath="xxxx/xxx/"</span><br><span class="line"></span><br><span class="line">hadoop jar $stream \</span><br><span class="line">-D mapreduce.job.reduces=300 \</span><br><span class="line">-D mapreduce.input.fileinputformat.split.minsize=134217728 \</span><br><span class="line">-D mapreduce.input.fileinputformat.split.maxsize=134217728 \</span><br><span class="line">-D mapreduce.job.name="MyWapResin_step1" \</span><br><span class="line">-D mapreduce.output.fileoutputformat.compress=true \</span><br><span class="line">-D mapreduce.output.fileoutputformat.compress.codec=com.hadoop.compression.lzo.LzopCodec \ #设置输出文件以lzo格式进行压缩</span><br><span class="line">-mapper MyWapResinMapper_step1.py \</span><br><span class="line">-reducer MyWapResinReducer_step1.py  \</span><br><span class="line">-input $inputFile \</span><br><span class="line">-output $outputFile \</span><br><span class="line">-file MyWapResinMapper_step1.py \</span><br><span class="line">-file MyWapResinReducer_step1.py</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>Tips：<br>如果命令行过长的话，可以先使用字符串表示出，例：<br>cmd_string=”cat data.txt | head -n 10”<br>eval $cmd_string #通过eval使得cmd_string生效</p>
-</blockquote>
-
+        <h2 id="MapReduce开发总结"><a href="#MapReduce开发总结" class="headerlink" title="MapReduce开发总结"></a>MapReduce开发总结</h2>
+        
+          <a class="article-more-a" href="/2018/06/03/Mapreduce开发总结/#more">more >></a>
+        
       
 
       
@@ -774,10 +758,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">enconding & decoding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
@@ -795,6 +775,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sampling</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">enconding & decoding</a>
               </li>
             
             <div class="clearfix"></div>
