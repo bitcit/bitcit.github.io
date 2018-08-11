@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://bitcit.cn">
-  <title>Tag: python | 日盈则仄 月盈则食</title>
+  <title>MapReduce开发总结 | 日盈则仄 月盈则食</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="日盈则仄 月盈则食">
-<meta property="og:url" content="http://bitcit.cn/tags/python/index.html">
+  <meta name="description" content="大数据开发">
+<meta name="keywords" content="others,MapReduce">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MapReduce开发总结">
+<meta property="og:url" content="http://bitcit.cn/2018/06/03/Mapreduce开发总结/index.html">
 <meta property="og:site_name" content="日盈则仄 月盈则食">
+<meta property="og:description" content="大数据开发">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-11T13:09:52.643Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="日盈则仄 月盈则食">
+<meta name="twitter:title" content="MapReduce开发总结">
+<meta name="twitter:description" content="大数据开发">
   
     <link rel="alternative" href="/atom.xml" title="日盈则仄 月盈则食" type="application/atom+xml">
   
@@ -160,181 +165,219 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Mapreduce开发总结" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MapReduce开发总结
+    </h1>
+  
+
+        
+        <a href="/2018/06/03/Mapreduce开发总结/" class="archive-article-date">
+  	<time datetime="2018-06-03T13:50:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-03</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="MapReduce开发总结"><a href="#MapReduce开发总结" class="headerlink" title="MapReduce开发总结"></a>MapReduce开发总结</h2><p>1.在java实现的MapReduce程序中，需要写一个继承 org.apache.hadoop.mapreduce.Mapper的类和一个继承 org.apache.hadoop.mapreduce.Reducer的类，在实现的类中分别重写map和reduce方法。创建一个含有主函数入口的类，在主函数中进行MapReduce任务相关的配置。&lt;/br&gt;<br>主要配置如下几个条目：&lt;/br&gt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Job;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.lib.input.FileInputFormat;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.util.GenericOptionsParser;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyWapResin</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">		Job job = Job.getInstance(conf);</span><br><span class="line">		<span class="comment">//Job job = new Job(conf); //老版本方法</span></span><br><span class="line">		job.setJarByClass(MyWapResin.class); <span class="comment">//设置Jar的入口类</span></span><br><span class="line">		job.setJobName(<span class="string">"MyWapResin"</span>); </span><br><span class="line">		String[] otherArgs = <span class="keyword">new</span> GenericOptionsParser(conf, args).getRemainingArgs(); <span class="comment">//因为在运行jar时有 -Dproperty=value 参数，将其过滤掉</span></span><br><span class="line"></span><br><span class="line">		FileInputFormat.addInputPaths(job, otherArgs[<span class="number">0</span>]); <span class="comment">//输入文件的路径，多条路径之间用逗号分隔</span></span><br><span class="line">		FileOutputFormat.setOutputPath(job, <span class="keyword">new</span> Path(otherArgs[<span class="number">1</span>])); <span class="comment">//输出文件的路径，要求定位在一个原本不存在的路径下，否个运行时会报错</span></span><br><span class="line">		</span><br><span class="line">		job.setMapperClass(MyWapResinMapper.class);<span class="comment">//指定Mppaer类</span></span><br><span class="line">		job.setReducerClass(MyWapResinReducer.class);<span class="comment">//指定Reducer类</span></span><br><span class="line">		<span class="comment">//设置输入key：value的类型，可以省略不设置</span></span><br><span class="line">		job.setMapOutputKeyClass(Text.class);</span><br><span class="line">		job.setMapOutputValueClass(Text.class);</span><br><span class="line">		<span class="comment">//设置Reducer输出的key:value的类型</span></span><br><span class="line">		job.setOutputKeyClass(Text.class);</span><br><span class="line">		job.setOutputValueClass(Text.class);</span><br><span class="line">		<span class="comment">//设置Reducer任务的个数，决定最后输出有多少个文件</span></span><br><span class="line">		job.setNumReduceTasks(<span class="number">100</span>);</span><br><span class="line">		<span class="comment">//等待程序结束，参数true表示打印出进度等相关信息</span></span><br><span class="line">		<span class="keyword">boolean</span> res = job.waitForCompletion(<span class="keyword">true</span>);</span><br><span class="line">		System.exit(res ? <span class="number">0</span> : <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>2.MapReduce运行过程的输出信息中有一个条目是：&lt;/br&gt;<br><code>The url to track the job: http://xxx.xxx.xxx_xxx_xxx/</code><br>在浏览器中打开对应的url可以查看该任务的运行相关日志，方便对程序进行debug。在debug过程中，我们可能需要在实现mapreduce的程序中使用 <code>System.out.println(&quot;xxx&quot;)</code> 来查看程序执行的状态，该输出信息不会被输出到标准输出中，而是输出在hadoop安装的目录 logs/userlogs/ 对应任务的 stdout 文件中，也可指直接在对应的url上查看对应的log信息中查看到。&lt;/br&gt;</p>
+<hr>
+<p>3.在elipse编译含有main函数的类时，出现 “找不到或无法加载主类” 的错误，此时在左侧栏的该项目文件标志上方有个红色的感叹号。。主要原因是，原来从外部加载的一些jar文件找不到了（外部的jar文件位置发生变化或者被删除）。解决办法是，在该项目下鼠标右键 Properties-&gt;Java Build Path-&gt;Libraries,将其中丢失的jar包移除即可。&lt;/br&gt;</p>
+<hr>
+<p>4.将相关的项目使用eclipse导出jar包，需要指定入口的main class。通过命令 <code>hadoop jar MyWapResin.jar [-Dmapreduce.map.memory.mb=4096 -Dmapreduce.reduce.memory.mb=8192 -Dmapreduce.map.java.opts=-Xmx3072m -Dmapreduce.reduce.java.opts=-Xmx6144m  -Dmapreduce.min.split.size=3000g ...] inputPath outputPath</code> 执行相应的MapReduce程序。</p>
+<hr>
+<p>5.通过Xshell等其他工具登录到开发机上时，此时Linux会开启一个进程（父进程），此后运行的各种程序都是该进程（父进程）的子进程，一旦网络不稳定等各种原因导致本地与开发机断开连接，对应的父进程就会被关闭，因而相关的子进程也就被关闭了，导致某些需要长时间执行的子进程不能正常执行。解决办法：&lt;/br&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nohup ./xxx.sh &amp;    #让提交的命令忽略hangup信号，&amp;让进程转到后台运行，输出信息会定位在当前目录下的 nohup.out 文件中</span><br><span class="line">setsid ./xxx.sh  #将该进程的父进程指定为 1 （init进程）</span><br><span class="line">[ctrl+z]  #将当前运行的进程挂起</span><br><span class="line">jobs  #查看当前所有的进程</span><br><span class="line">bg xxxx  #将进程 xxxx 转入后台执行</span><br><span class="line">fg xxxx  #将进程 xxxx 撞到前台执行</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>6.使用hadoop-streaming.jar运行Python编写的mapreduce程序相关设置：&lt;/br&gt;<br>用两个.py文件分别实现mapper和reducer对应的操作，其输入都来自于标准输入 stdin 。与java不同的是，在reduce阶段，java的输入是 {key_1, list(value_1, value_2, …)}, 此时reducer获得的values是一堆value的集合；而Python中reducer阶段输入的是{key_1, value_1}，就是mapper的输出一行数据，只不过在mapper在很多行数据传给reducer之前会根据key进行排序，然后依次喂给reducer，所以reducer处理的数据中key相同的数据会处于相邻的行。&lt;/br&gt;<br>可以通过在放到集群上运行之前在小数据上通过 <code>cat data.txt | ./mapper.py | sort | ./reducer.py &gt; output.txt</code> 进行测试。&lt;/br&gt;<br>shell 脚本配置示例：&lt;/br&gt;<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">stream="/usr/lib/hadoop-mapreduce/hadoop-streaming.jar" #根据hadoop实际安装的位置进行配置</span><br><span class="line">inputPath="xxx/xxx/" #根据实际情况配置</span><br><span class="line">outputPath="xxxx/xxx/"</span><br><span class="line"></span><br><span class="line">hadoop jar $stream \</span><br><span class="line">-D mapreduce.job.reduces=300 \</span><br><span class="line">-D mapreduce.input.fileinputformat.split.minsize=134217728 \</span><br><span class="line">-D mapreduce.input.fileinputformat.split.maxsize=134217728 \</span><br><span class="line">-D mapreduce.job.name="MyWapResin_step1" \</span><br><span class="line">-D mapreduce.output.fileoutputformat.compress=true \</span><br><span class="line">-D mapreduce.output.fileoutputformat.compress.codec=com.hadoop.compression.lzo.LzopCodec \ #设置输出文件以lzo格式进行压缩</span><br><span class="line">-mapper MyWapResinMapper_step1.py \</span><br><span class="line">-reducer MyWapResinReducer_step1.py  \</span><br><span class="line">-input $inputFile \</span><br><span class="line">-output $outputFile \</span><br><span class="line">-file MyWapResinMapper_step1.py \</span><br><span class="line">-file MyWapResinReducer_step1.py</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Tips：<br>如果命令行过长的话，可以先使用字符串表示出，例：<br>cmd_string=”cat data.txt | head -n 10”<br>eval $cmd_string #通过eval使得cmd_string生效</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/15/Python2 中的编码问题/" class="archive-article-date">
-  	<time datetime="2018-06-15T14:37:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/15/Python2 中的编码问题/">Python2中的编码问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">enconding & decoding</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">others</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MapReduce</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Python2//" class="article-tag-list-link color3">Python2</a>
+        			<a href="/categories/其他//" class="article-tag-list-link color3">其他</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://bitcit.cn/2018/06/03/Mapreduce开发总结/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/24/pandas_tutorial/" class="archive-article-date">
-  	<time datetime="2018-03-24T05:02:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-24</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/06/15/Python2 中的编码问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Python2中的编码问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/25/采样方法——马尔科夫链蒙特卡洛（MCMC)与Gibbs 采样/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">采样方法——马尔科夫链蒙特卡洛（MCMC)与 Gibbs 采样</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/24/pandas_tutorial/">Python 第三方包 pandas 使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">pandas</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python-相关包//" class="article-tag-list-link color1">Python 相关包</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce开发总结"><span class="toc-number">1.</span> <span class="toc-text">MapReduce开发总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/22/numpy_tutorial/" class="archive-article-date">
-  	<time datetime="2018-03-22T15:47:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/22/numpy_tutorial/">Python 第三方包 numpy 使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">numpy</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python-相关包//" class="article-tag-list-link color1">Python 相关包</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -357,9 +400,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
